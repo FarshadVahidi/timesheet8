@@ -26,7 +26,16 @@
 
             <div class="mt-4">
                 <x-jet-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                <x-jet-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
+                <x-jet-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password"></x-jet-input>
+            </div>
+
+            <div class="mt-4">
+                <x-jet-label for="role_id" value="{{ __('Role') }}" />
+                <select id="role_id" class="block mt-1 w-full" name="role_id">
+                    <option selected="true" disabled>Select</option>
+                    <option value="user">User</option>
+                    @yield('optionReg')
+                </select>
             </div>
 
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
