@@ -18,11 +18,17 @@ class HourController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->isAbleTo('hour-read'))
+        if(Auth::user()->hasRole('user'))
         {
             $id = Auth::user()->id;
             $allMyHours = DB::table('hours')->where('user_id' , '=' , $id)->orderByRaw('date DESC')->get();
             return view('user.allHours', compact('allMyHours'));
+        }
+        if(Auth::user()->hasRole('administrator'))
+        {
+            $id = Auth::user()->id;
+            $allMyHours = DB::table('hours')->where('user_id' , '=' , $id)->orderByRaw('date DESC')->get();
+            return view('admin.allHours', compact('allMyHours'));
         }
 
     }
