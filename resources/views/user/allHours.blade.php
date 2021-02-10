@@ -28,7 +28,7 @@
                             <td>{{$hour->hour}}</td>
                             <td>{{$hour->created_at}}</td>
                             <td>{{$hour->updated_at}}</td>
-                            <td><a href="/hour-update/{{$hour->id}}" class="btn btn-info">update</a></td>
+                            <td><a href="/hour-update/{{$hour->date}}" class="btn btn-info">update</a></td>
                         </tr>
                     @endforeach
                     </tbody>
