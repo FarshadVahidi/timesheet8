@@ -1,4 +1,4 @@
-@extends('user.dashboard')
+@extends('admin.dashboard')
 
 @section('describe1')
 
@@ -52,3 +52,4 @@
     </section>
 
 @endsection
+

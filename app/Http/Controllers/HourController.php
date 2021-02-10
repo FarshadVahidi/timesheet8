@@ -18,11 +18,17 @@ class HourController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->isAbleTo('hour-read'))
+        if(Auth::user()->hasRole('user'))
         {
             $id = Auth::user()->id;
             $allMyHours = DB::table('hours')->where('user_id' , '=' , $id)->orderByRaw('date DESC')->get();
             return view('user.allHours', compact('allMyHours'));
+        }
+        if(Auth::user()->hasRole('administrator'))
+        {
+            $id = Auth::user()->id;
+            $allMyHours = DB::table('hours')->where('user_id' , '=' , $id)->orderByRaw('date DESC')->get();
+            return view('admin.allHours', compact('allMyHours'));
         }
 
     }
@@ -34,9 +40,13 @@ class HourController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->isAbleTo('hour-create'))
+        if(Auth::user()->hasRole('user'))
         {
             return view ('user.addHour');
+        }
+        if(Auth::user()->hasRole('administrator'))
+        {
+            return view('admin.addHour');
         }
     }
 
@@ -82,12 +92,29 @@ class HourController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
     public function edit($id)
     {
-        $date = Hour::find($id);
-        return view('user.edit-hour', compact('date'));
+        if(Auth::user()->isAbleTo('hour-update'))
+        {
+            $date = Hour::find($id);
+            if(Auth::user()->hasRole('user'))
+            {
+                if($date->user_id === Auth::user()->id)
+                    return view('user.edit-hour', compact('date'));
+                else
+                    return back()->with('alert', 'You have no permission to access!!!');
+            }elseif(Auth::user()->hasRole('administrator'))
+            {
+                if($date->user_id === Auth::user()->id)
+                    return view('admin.edit-hour', compact('date'));
+                else
+                    return back()->with('alert', 'You have no permission to access!!!');
+            }
+
+        }
+
     }
 
     /**
