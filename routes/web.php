@@ -34,7 +34,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/addNewPerson', [RegisterController::class, 'index'])->name('register');
     Route::post('/addNewPerson', [RegisterController::class, 'store']);
 
-    Route::get('/allHour', [HourController::class,'index'])->name('hou');
+    Route::get('/allMyHours', [HourController::class,'index'])->name('Myhours');
 
     Route::get('/addNewHour',[HourController::class,'create'])->name('add');
     Route::post('/daycare', [HourController::class,'store']);

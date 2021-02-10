@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,25 +16,11 @@ class HourController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        switch($user){
-            case('user'):
-                $hourDetail = DB::table('users')->join('hours', 'users.id', '=', 'hours.user_id')
-                    ->select('user_id', 'date', 'hour', 'create_at', 'update_at')
-                    ->groupBy('date')->get();
-                return view('user.allHour', compact('hourDetail'));
-                break;
-
-            case('administrator'):
-
-                break;
-
-            case('superadministrator'):
-
-                break;
-
-            default:
-
+        if(Auth::user()->isAbleTo('hour-read'))
+        {
+            $id = Auth::user()->id;
+            $allMyHours = DB::table('hours')->where('user_id' , '=' , $id)->get();
+            return view('user.allHours', compact('allMyHours'));
         }
 
     }
