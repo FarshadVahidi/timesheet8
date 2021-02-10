@@ -92,12 +92,29 @@ class HourController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
     public function edit($id)
     {
-        $date = Hour::find($id);
-        return view('user.edit-hour', compact('date'));
+        if(Auth::user()->isAbleTo('hour-update'))
+        {
+            $date = Hour::find($id);
+            if(Auth::user()->hasRole('user'))
+            {
+                if($date->user_id === Auth::user()->id)
+                    return view('user.edit-hour', compact('date'));
+                else
+                    return back()->with('alert', 'You have no permission to access!!!');
+            }elseif(Auth::user()->hasRole('administrator'))
+            {
+                if($date->user_id === Auth::user()->id)
+                    return view('admin.edit-hour', compact('date'));
+                else
+                    return back()->with('alert', 'You have no permission to access!!!');
+            }
+
+        }
+
     }
 
     /**
