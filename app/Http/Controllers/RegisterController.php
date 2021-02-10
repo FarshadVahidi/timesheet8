@@ -3,17 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        if($user->hasRole('user'))
+        {
+            return back()->with('hasNotPermission', 'YOU DO NOT HAVE ACCESS TO THIS SECTION');
+        }elseif($user->hasRole('administrator'))
+        {
+            return view('admin.registration');
+        }elseif($user->hasRole('superadministrator'))
+        {
+            return view('super.registration');
+        }
     }
 
     /**
