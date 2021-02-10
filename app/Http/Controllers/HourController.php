@@ -34,9 +34,13 @@ class HourController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->isAbleTo('hour-create'))
+        if(Auth::user()->hasRole('user'))
         {
             return view ('user.addHour');
+        }
+        if(Auth::user()->hasRole('administrator'))
+        {
+            return view('admin.addHour');
         }
     }
 
