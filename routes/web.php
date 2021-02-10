@@ -37,6 +37,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/allMyHours', [HourController::class,'index'])->name('Myhours');
 
     Route::get('/addNewHour',[HourController::class,'create'])->name('add');
-    Route::post('/daycare', [HourController::class,'store']);
+    Route::post('/createNewHour', [HourController::class,'store']);
 
 });
