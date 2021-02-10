@@ -28,7 +28,7 @@ Route::view('contact', 'contact');
 //})->name('dashboard');
 
 //auth route for all
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/addNewPerson', [RegisterController::class, 'index'])->name('register');
@@ -38,5 +38,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('/addNewHour',[HourController::class,'create'])->name('add');
     Route::post('/createNewHour', [HourController::class,'store']);
+
+    Route::get('/hour-update/{id}', [HourController::class, 'edit']);
+    Route::post('/day-updated', [HourController::class, 'update'])->name('day.update');
 
 });

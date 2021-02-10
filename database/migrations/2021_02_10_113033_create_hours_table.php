@@ -15,12 +15,13 @@ class CreateHoursTable extends Migration
     {
         Schema::create('hours', function (Blueprint $table) {
 
+            $table->id();
             $table->unsignedBigInteger('user_id');
             $table->date('date');
             $table->integer('hour');
             $table->timestamps();
 
-            $table->primary(['user_id', 'date']);
+//            $table->primary(['user_id', 'date']);
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('restrict');
         });
     }
