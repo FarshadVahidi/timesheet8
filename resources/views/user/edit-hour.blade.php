@@ -11,6 +11,13 @@
                             {{Session::get('hour_update')}}
                         </div>
                     @endif
+
+                        @if(Session::has('alert'))
+                            <div class="alert alert-danger" role="alert">
+                                {{Session::get('alert')}}
+                            </div>
+                        @endif
+
                 </div>
             </div>
 
