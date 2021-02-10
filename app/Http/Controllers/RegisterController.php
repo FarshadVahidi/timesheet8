@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
@@ -41,11 +43,26 @@ class RegisterController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name'=>'required|string|max:255',
+            'email'=>'required|string|email|unique:users',
+            'password'=> 'required|min:8',
+            'role_id'=> 'required|string',
+        ]);
+
+//        try{
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->save();
+        $user->attachRole($request->role_id);
+
+        return back()->with('user_added', 'User added successfully.');
     }
 
     /**
