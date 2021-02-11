@@ -91,11 +91,12 @@ class HourController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $data = DB::table('hours')->select('id', 'user_id', 'date', 'hour', 'hours.created_at', 'hours.updated_at')->where('user_id', '=', $id)->orderByRaw('date DESC')->get();
+        return view ('super.hourdetail', compact('data'));
     }
 
     /**
@@ -127,8 +128,9 @@ class HourController extends Controller
                 {
                     return view('super.edit-hour', compact('date'));
                 }else
-                    return back()->with('alert', 'You have no permission to access!!!');
+                    return view('super.edit-staff-hour', compact('date'));
             }
+
 
         }
 
@@ -169,4 +171,5 @@ class HourController extends Controller
             return view('super.staffHour', compact('staffHour'));
         }
     }
+
 }
