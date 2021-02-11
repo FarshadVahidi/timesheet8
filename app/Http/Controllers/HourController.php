@@ -54,6 +54,10 @@ class HourController extends Controller
         {
             return view('admin.addHour');
         }
+        if(Auth::user()->hasRole('superadministrator'))
+        {
+            return view('super.addHour');
+        }
     }
 
     /**
