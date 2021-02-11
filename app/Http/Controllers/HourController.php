@@ -121,6 +121,13 @@ class HourController extends Controller
                     return view('admin.edit-hour', compact('date'));
                 else
                     return back()->with('alert', 'You have no permission to access!!!');
+            }elseif(Auth::user()->hasRole('superadministrator'))
+            {
+                if($date->user_id === Auth::user()->id)
+                {
+                    return view('super.edit-hour', compact('date'));
+                }else
+                    return back()->with('alert', 'You have no permission to access!!!');
             }
 
         }
