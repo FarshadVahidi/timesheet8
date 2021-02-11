@@ -42,4 +42,6 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
     Route::get('/hour-update/{id}', [HourController::class, 'edit']);
     Route::post('/day-updated', [HourController::class, 'update'])->name('day.update');
 
+    Route::get('/staffHour', [HourController::class, 'staffHour'])->name('staffHour');
+
 });

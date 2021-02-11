@@ -159,4 +159,14 @@ class HourController extends Controller
     {
         //
     }
+
+    public function staffHour()
+    {
+        if(Auth::user()->hasRole('superadministrator'))
+        {
+            $staffHour = DB::table('users')->join('hours', 'users.id' , '=', 'hours.user_id')->select('users.id', 'users.name', DB::raw('sum(hour) as sum'))
+                ->groupBy('users.id')->orderByRaw('user_id ASC')->get();
+            return view('super.staffHour', compact('staffHour'));
+        }
+    }
 }
