@@ -30,6 +30,12 @@ class HourController extends Controller
             $allMyHours = DB::table('hours')->where('user_id' , '=' , $id)->orderByRaw('date DESC')->get();
             return view('admin.allHours', compact('allMyHours'));
         }
+        if(Auth::user()->hasRole('superadministrator'))
+        {
+            $id = Auth::user()->id;
+            $allMyHours = DB::table('hours')->where('user_id' , '=' , $id)->orderByRaw('date DESC')->get();
+            return view('super.allHours', compact('allMyHours'));
+        }
 
     }
 

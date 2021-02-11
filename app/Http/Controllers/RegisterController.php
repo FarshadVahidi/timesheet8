@@ -19,6 +19,7 @@ class RegisterController extends Controller
         $user = Auth::user();
         if($user->hasRole('user'))
         {
+            //I think i would be best if i use event and listen and send email to admin to tell him a specific user try to access this section
             return back()->with('hasNotPermission', 'YOU DO NOT HAVE ACCESS TO THIS SECTION');
         }elseif($user->hasRole('administrator'))
         {
@@ -109,4 +110,5 @@ class RegisterController extends Controller
     {
         //
     }
+
 }
