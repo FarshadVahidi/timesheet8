@@ -20,3 +20,9 @@
     </div>
 @endif
 
+@if(Session::has('alert_deleted'))
+    <div class="alert alert-danger" role="alert">
+        {{Session::get('alert_deleted')}}
+    </div>
+@endif
+
