@@ -30,7 +30,7 @@
                         @csrf
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Date</label>
-                            <input type="date" name="Date" class="form-control" id="exampleInputEmail1">
+                            <input type="text" name="Date" class="form-control" id="exampleInputEmail1" value={{$id}}>
                         </div>
 
                         <div class="mb-3">

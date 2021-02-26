@@ -48,7 +48,8 @@ class HourController extends Controller
     {
         if(Auth::user()->hasRole('user'))
         {
-            return view ('user.addHour');
+            $td = DB::table('hours')->select('user_id', 'hour', 'date', 'id')->where('user_id','=', request()->user()->id)->get();
+            return view ('calendar', compact('td'));
         }
         if(Auth::user()->hasRole('administrator'))
         {
@@ -57,6 +58,14 @@ class HourController extends Controller
         if(Auth::user()->hasRole('superadministrator'))
         {
             return view('super.addHour');
+        }
+    }
+
+    public function MyCreate($id)
+    {
+        if(Auth::user()->hasRole('user'))
+        {
+            return view('user.addHour',compact('id'));
         }
     }
 
