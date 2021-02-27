@@ -1,7 +1,7 @@
 @extends('welcome')
 
 <?php
-function build_calendar($month, $year){
+function build_calendar($month, $year, $tds){
     //fist of all we'll create an array containing names of all days in a week
     $daysOfWeek = array('Lunedy', 'Martedi', 'Merquledi', 'Giovedi', 'Venerdi', 'Sabato', 'Domenica');
 
@@ -69,17 +69,18 @@ function build_calendar($month, $year){
 
         $today = $date == date('Y-m-d')?"today":"";
 
+        $myArray = (array)$tds;
+
+        $second = (array_column($myArray, 'id', 'date'));
+
         if($date > date('Y-m-d')){
             $calendar.="<td><h4>$currentDay</h4> <button class='btn btn-danger btn-xs'>N/A</button>";
+        }elseif(in_array($date, array_column($myArray, 'date'))){
+            $id = $second[$date];
+            $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='/hours-update/".$second[$date]."' class='btn btn-info btn-xs'>up date</a>";
         }else{
             $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='/add/".$date."' class='btn btn-success btn-xs'>add Hour</a>";
         }
-
-//            if($dateToday == $date){
-//                $calendar.="<td class='todayY'><h4>$currentDay</h4>";
-//            }else{
-//                $calendar.="<td><h4>$currentDay</h4>";
-//            }
 
         $calendar.="</td>";
 
@@ -130,7 +131,7 @@ function build_calendar($month, $year){
                 $dateComponents = getdate();
                 $month = $dateComponents['mon'];
                 $year = $dateComponents['year'];
-                echo build_calendar($month, $year);
+                echo build_calendar($month, $year, $td);
                 ?>
             </div>
         </div>

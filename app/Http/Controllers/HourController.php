@@ -48,7 +48,7 @@ class HourController extends Controller
     {
         if(Auth::user()->hasRole('user'))
         {
-            $td = DB::table('hours')->select('user_id', 'hour', 'date', 'id')->where('user_id','=', request()->user()->id)->get();
+            $td = DB::table('hours')->select('id','date', 'hour')->where('user_id','=', auth()->id())->get()->toArray();
             return view ('calendar', compact('td'));
         }
         if(Auth::user()->hasRole('administrator'))
