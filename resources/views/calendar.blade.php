@@ -76,7 +76,6 @@ function build_calendar($month, $year, $tds){
         if($date > date('Y-m-d')){
             $calendar.="<td><h4>$currentDay</h4> <button class='btn btn-danger btn-xs'>N/A</button>";
         }elseif(in_array($date, array_column($myArray, 'date'))){
-            $id = $second[$date];
             $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='/hours-update/".$second[$date]."' class='btn btn-info btn-xs'>up date</a>";
         }else{
             $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='/add/".$date."' class='btn btn-success btn-xs'>add Hour</a>";
